@@ -37,7 +37,7 @@ public class CameraActivity extends Activity {
 	private Camera tzCamera;
 	private int angle = 0;
 	private PhotoTools pt = PhotoTools.getInstence(getApplication());
-	private FileCache cache = FileCache.getInstence(getApplication());
+	private FileCache cache = FileCache.Companion.getInstence(getApplication());
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {

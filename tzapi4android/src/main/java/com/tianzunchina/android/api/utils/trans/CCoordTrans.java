@@ -10,8 +10,7 @@ public class CCoordTrans {
     private double L;
     private double L0;
 
-    public CCoordTrans(int coordSysID)
-    {
+    public CCoordTrans(int coordSysID) {
         this.L = 0.0;
         this.B = 0.0;
         this.a = 0.0;
@@ -26,8 +25,7 @@ public class CCoordTrans {
         this.L0 = 2.0943951023931953;
     }
 
-    public CCoordTrans(int coordSysID, double l0)
-    {
+    public CCoordTrans(int coordSysID, double l0) {
         this.L = 0.0;
         this.B = 0.0;
         this.a = 0.0;
@@ -42,8 +40,7 @@ public class CCoordTrans {
         this.L0 = (l0 / 180.0) * 3.1415926535897931;
     }
 
-    public CCoordTrans(int coordSysID, double l0, double FE)
-    {
+    public CCoordTrans(int coordSysID, double l0, double FE) {
         this.L = 0.0;
         this.B = 0.0;
         this.a = 0.0;
@@ -63,8 +60,7 @@ public class CCoordTrans {
         return ((this.L - this.L0) * Math.cos(this.B));
     }
 
-    public double getC()
-    {
+    public double getC() {
         return (Math.pow(this.getSEccentricity(), 2.0) * Math.pow(Math.cos(this.B), 2.0));
     }
 
@@ -78,8 +74,7 @@ public class CCoordTrans {
         return ((this.a - this.b) / this.a);
     }
 
-    public double getM()
-    {
+    public double getM() {
         double x = this.getEccentricity();
         double num2 = Math.pow(x, 2.0) / 4.0;
         double num3 = (3.0 * Math.pow(x, 4.0)) / 64.0;
@@ -91,8 +86,7 @@ public class CCoordTrans {
         return (this.a * (((num5 - num6) + num7) - num8));
     }
 
-    private double getMeridian(double val2)
-    {
+    private double getMeridian(double val2) {
         if (val2 < 0.0)
         {
             return -1.0;
@@ -106,14 +100,12 @@ public class CCoordTrans {
         return (num4 * 3);
     }
 
-    public double getN()
-    {
+    public double getN() {
         double x = this.getEccentricity();
         return (this.a / Math.sqrt(1.0 - (Math.pow(x, 2.0) * Math.pow(Math.sin(this.B), 2.0))));
     }
 
-    public double[] getProjectCoord(double lValue, double bValue)
-    {
+    public double[] getProjectCoord(double lValue, double bValue) {
         double d = lValue;
         double num2 = bValue;
         double num3 = this.getRad(d);
@@ -148,8 +140,7 @@ public class CCoordTrans {
         return ((d / 180.0) * 3.1415926535897931);
     }
 
-    public double getSEccentricity()
-    {
+    public double getSEccentricity() {
         double num = (this.a * 1.0) / this.b;
         return Math.sqrt((num * num) - 1.0);
     }
@@ -159,8 +150,7 @@ public class CCoordTrans {
         return Math.pow(Math.tan(this.B), 2.0);
     }
 
-    private double[] trans(double xOld, double yOld)
-    {
+    private double[] trans(double xOld, double yOld) {
         double num = 18.6567;
         double num2 = -17.936000000000007;
         double num3 = 0.99999997;
@@ -173,8 +163,7 @@ public class CCoordTrans {
         return numArray;
     }
 
-    public double transDFMtoDegree(double dfm)
-    {
+    public double transDFMtoDegree(double dfm) {
         double num = Math.floor(dfm);
         double num2 = ((1.0 * (Math.floor(dfm * 100.0) - (num * 100.0))) * 1.0) / 60.0;
         double num3 = ((dfm * 10000.0) - (Math.floor(dfm * 100.0) * 100.0)) / 3600.0;

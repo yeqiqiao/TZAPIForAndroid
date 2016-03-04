@@ -40,7 +40,7 @@ public class PhotoTools {
 	
 	private PhotoTools(Application app){
 		this.app = app;
-		cache = FileCache.getInstence(app);
+		cache = FileCache.Companion.getInstence(app);
 		converter = UnitConverter.getInstence(app);
 	}
 	

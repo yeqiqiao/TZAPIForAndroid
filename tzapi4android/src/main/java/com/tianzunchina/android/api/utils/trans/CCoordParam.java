@@ -13,8 +13,7 @@ public class CCoordParam {
         this.coordSysID = coordSysID;
     }
 
-    public double getA()
-    {
+    public double getA() {
         if ((this.coordSysID >= 0) && (this.coordSysID <= 2))
         {
             return a[this.coordSysID];
@@ -22,8 +21,7 @@ public class CCoordParam {
         return 0.0;
     }
 
-    public double getB()
-    {
+    public double getB() {
         if ((this.coordSysID >= 0) && (this.coordSysID <= 2))
         {
             return b[this.coordSysID];

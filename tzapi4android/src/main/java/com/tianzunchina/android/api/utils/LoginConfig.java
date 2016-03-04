@@ -1,6 +1,6 @@
 package com.tianzunchina.android.api.utils;
 
-import com.tianzunchina.android.api.model.SignInUser;
+import com.tianzunchina.android.api.login.SignInUser;
 
 public class LoginConfig extends Config {
 	
@@ -11,9 +11,7 @@ public class LoginConfig extends Config {
 	private static LoginConfig instence;
 	
 	
-	private LoginConfig(){
-		
-	}
+	private LoginConfig(){  }
 	
 	public static LoginConfig getInstence(){
 		if(instence == null){
@@ -21,18 +19,16 @@ public class LoginConfig extends Config {
 		}
 		return instence;
 	}
-	/*
+	/**
 	 * 保存登录状态
 	 * @param user 包含userName及userPassword的对象
-	 * @param isSave true 保存用户名及密码 false 仅保存用户名
-	 * @param isAuto true 下次自动登录 false 下次不自动登录
 	 * @return 没有返回值
 	 */
 	public void saveUser(SignInUser user){
 //		保存用户名及密码信息 并标记是否记住密码及自动登录
-		saveInfo(USER_NAME, user.getUserName());
+		saveInfo(USER_NAME, user.getAccount());
 		if(user.isKeep()){
-			saveInfo(USER_PASSWORD, user.getUserPassword());
+			saveInfo(USER_PASSWORD, user.getPassword());
 		}
 		saveInfo(IS_SAVE_PASSWORD, user.isKeep());
 	}
