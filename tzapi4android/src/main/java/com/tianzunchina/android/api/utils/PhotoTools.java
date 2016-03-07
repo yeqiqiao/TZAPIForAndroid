@@ -27,27 +27,23 @@ import java.net.URL;
 public class PhotoTools {
 	private UnitConverter converter;
 	private static PhotoTools photoTools;
-	private static Application app;
-	private FileCache cache;
-	
-	public static PhotoTools getInstence(Application app){
+
+	public static PhotoTools getInstence(){
 		if(photoTools == null){
-			photoTools = new PhotoTools(app);
+			photoTools = new PhotoTools();
 			
 		}
 		return photoTools;
 	}
 	
-	private PhotoTools(Application app){
-		this.app = app;
-		cache = FileCache.Companion.getInstence(app);
-		converter = UnitConverter.getInstence(app);
+	private PhotoTools(){
+		converter = UnitConverter.INSTANCE;
 	}
 	
 	
 	public File getCache(String path) {
-		String fileName = cache.url2fileName(path);
-		File file = new File(cache.getThumbDir(), fileName);
+		String fileName = FileCache.INSTANCE.url2fileName(path);
+		File file = new File(FileCache.INSTANCE.getCacheDir(), fileName);
 		return file;
 	}
 
@@ -127,13 +123,13 @@ public class PhotoTools {
 	 * 保存图片到缓存
 	 */
 	public File saveBitmap(Bitmap bitmap) {
-		File file = cache.getThumbFile();
+		File file = FileCache.INSTANCE.getCacheDir();
 		saveBitmap(bitmap, file);
 		return file;
 	}
 
 	public File saveBitmap(Bitmap bitmap, URL url) {
-		File file = new File(cache.getThumbDir(), cache.url2fileName(url));
+		File file = new File(FileCache.INSTANCE.getCacheDir(), FileCache.INSTANCE.url2fileName(url));
 		saveBitmap(bitmap, file);
 		return file;
 	}

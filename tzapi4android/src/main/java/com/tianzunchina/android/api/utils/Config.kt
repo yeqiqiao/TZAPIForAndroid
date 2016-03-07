@@ -3,6 +3,7 @@ package com.tianzunchina.android.api.utils
 import android.app.Activity
 import android.content.SharedPreferences
 import android.content.SharedPreferences.Editor
+import com.tianzunchina.android.api.control.TZApplication
 
 /**
  * 配置信息管理的父类
@@ -16,7 +17,7 @@ open class Config {
 	 */
     private fun initSP() {
 		if (share == null) {
-			share = MyApplication.getInstance().getSharedPreferences(PREFERENCE_NAME, Activity.MODE_PRIVATE)
+			share = TZApplication.instance!!.getSharedPreferences(PREFERENCE_NAME, Activity.MODE_PRIVATE)
 		}
 	}
 

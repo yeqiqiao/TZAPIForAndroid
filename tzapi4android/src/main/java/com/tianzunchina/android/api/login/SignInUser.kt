@@ -11,8 +11,8 @@ import java.util.HashMap
  */
 class SignInUser {
 
-    var account: String? = null
-    var password: String? = null
+    var account: String
+    var password: String = ""
     var isKeep = false
     var isAuto = false
 
@@ -41,13 +41,13 @@ class SignInUser {
 
     val data: Map<String, String> get() {
         val map = HashMap<String, String>()
-        map.put(LoginConfig.getUserName(), account!!)
-        map.put(LoginConfig.getUserPassword(), password!!)
+        map.put(LoginConfig.USER_NAME, account!!)
+        map.put(LoginConfig.USER_PASSWORD, password!!)
         return map
     }
 
     fun save(){
-        LoginConfig.getInstence().saveUser(this)
+        LoginConfig.saveUser(this)
     }
 
     override fun toString(): String {

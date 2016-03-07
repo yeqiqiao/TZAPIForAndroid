@@ -13,10 +13,12 @@ import java.util.Date
 
 /**
  * 文件缓存操作类
+ * 需要设置 [com.tianzunchina.android.api.control.TZApplication]
+ * CraetTime 2016-3-4
  * @author SunLiang
  */
-class FileCache private constructor(private val app: Application) {
-
+object FileCache{
+    val app = TZApplication.instance!!
     /**
      * 获得一个隐藏的缓存目录
      * @return 缓存目录
@@ -116,20 +118,4 @@ class FileCache private constructor(private val app: Application) {
         return fileName
     }
 
-    companion object {
-        private var cache: FileCache? = null
-
-        /**
-         * 获取单例
-         * 需要设置 [com.tianzunchina.android.api.control.TZApplication]
-         * @return
-         */
-        val instence: FileCache
-            get() {
-                if (cache == null) {
-                    cache = FileCache(TZApplication.getInstance())
-                }
-                return cache as FileCache
-            }
-    }
 }
