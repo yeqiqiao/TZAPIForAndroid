@@ -37,10 +37,8 @@ object  LoginConfig : Config() {
         val userName = loadString(USER_NAME)
         val password = loadString(USER_PASSWORD)
         val isKeep = loadBoolean(IS_SAVE_PASSWORD)
-        if (userName != null) {
-            user = SignInUser(userName, password, isKeep)
-        }
-        return user!!
+        user = SignInUser(userName, password, isKeep)
+        return user
     }
 
     fun removePWD() {

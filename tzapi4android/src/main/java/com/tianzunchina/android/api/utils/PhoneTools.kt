@@ -8,7 +8,6 @@ import android.content.pm.PackageManager
 import android.net.Uri
 import android.provider.Settings
 import android.telephony.TelephonyManager
-import com.tianzunchina.android.api.base.TZActivity
 import com.tianzunchina.android.api.control.TZApplication
 
 import java.io.File
@@ -30,7 +29,7 @@ object  PhoneTools {
 
     val versionCode: Int
         get() {
-            var packInfo: PackageInfo? = null
+            var packInfo: PackageInfo?
             var version = 0
             try {
                 packInfo = pm.getPackageInfo(app!!.packageName, 0)
@@ -44,7 +43,7 @@ object  PhoneTools {
 
     val versionName: String
         get() {
-            var packInfo: PackageInfo? = null
+            var packInfo: PackageInfo?
             var versionName = ""
             try {
                 packInfo = pm.getPackageInfo(app!!.packageName, 0)

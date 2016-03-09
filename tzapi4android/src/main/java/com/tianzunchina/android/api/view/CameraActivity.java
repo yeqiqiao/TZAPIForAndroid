@@ -36,8 +36,8 @@ public class CameraActivity extends Activity {
 	private SurfaceView surfaceView;
 	private Camera tzCamera;
 	private int angle = 0;
-	private PhotoTools pt = PhotoTools.getInstence(getApplication());
-	private FileCache cache = FileCache.Companion.getInstence(getApplication());
+	private PhotoTools pt = PhotoTools.INSTANCE;
+	private FileCache cache = FileCache.INSTANCE;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -102,7 +102,7 @@ public class CameraActivity extends Activity {
 				tzCamera.startPreview();
 				tzCamera.autoFocus(new AutoFocusCallback() {
 	                @Override
-	                public void onAutoFocus(boolean success, Camera camera) {  
+	                public void onAutoFocus(boolean success, Camera camera) {
 	                    if(success){
 	                        camera.cancelAutoFocus();
 	                    }  
@@ -174,9 +174,8 @@ public class CameraActivity extends Activity {
 					if (Environment.getExternalStorageState().equals(
 							Environment.MEDIA_MOUNTED)) {
 						// 将拍的照片保存到sd卡中
-						File jpgFile = cache.getThumbFile();
+						File jpgFile = cache.getCacheDir();
 						Bitmap bitmap = BitmapFactory.decodeByteArray(data, 0, data.length);
-						data = null;
 						bitmap = pt.rotateBitmap(bitmap, angle);
 						pt.saveBitmap(bitmap, jpgFile);
 						// 返回照片路径
@@ -186,8 +185,8 @@ public class CameraActivity extends Activity {
 						closeDialog();
 						finish();
 					} else {
-						cache.getThumbDir().mkdir();
-						cache.getThumbDir().mkdirs();
+						cache.getCacheDir().mkdir();
+						cache.getCacheDir().mkdirs();
 						Toast.makeText(getApplicationContext(), "请检查SD卡",
 								Toast.LENGTH_LONG).show();
 					}
@@ -218,7 +217,7 @@ public class CameraActivity extends Activity {
 	        try {  
 	            downPolymorphic = camera.getClass().getMethod("setDisplayOrientation", new Class[] { int.class });  
 	            if (downPolymorphic != null)  
-	                downPolymorphic.invoke(camera, new Object[] { orientation });  
+	                downPolymorphic.invoke(camera, new Object[] { orientation });
 	        }  
 	        catch (Exception e1){
 	        	e1.printStackTrace();

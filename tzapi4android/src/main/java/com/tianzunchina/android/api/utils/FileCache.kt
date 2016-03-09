@@ -63,7 +63,6 @@ object FileCache{
         } catch (e: Exception) {
             e.printStackTrace()
         }
-
         return File(cacheDir, filename + type).absolutePath
     }
 

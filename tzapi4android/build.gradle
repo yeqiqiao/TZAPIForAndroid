@@ -28,6 +28,9 @@ dependencies {
     compile 'org.jetbrains.kotlin:kotlin-android-extensions:1.0.0'
     compile 'org.jetbrains.anko:anko-sdk23:0.8.2'
     compile 'org.jetbrains.anko:anko-support-v4:0.8.2'
+    compile 'com.squareup.picasso:picasso:2.5.2'
+    compile 'com.google.code.ksoap2-android:ksoap2-android:3.5.0'
+    compile 'com.squareup.okhttp:okhttp:2.4.0'
     compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
 }
 
@@ -52,6 +55,9 @@ allprojects {
         jcenter()
         maven {
             url "https://jitpack.io"
+        }
+        maven {
+            url "https://oss.sonatype.org/content/repositories/ksoap2-android-releases/"
         }
     }
 }

@@ -41,8 +41,8 @@ class SignInUser {
 
     val data: Map<String, String> get() {
         val map = HashMap<String, String>()
-        map.put(LoginConfig.USER_NAME, account!!)
-        map.put(LoginConfig.USER_PASSWORD, password!!)
+        map.put(LoginConfig.USER_NAME, account)
+        map.put(LoginConfig.USER_PASSWORD, password)
         return map
     }
 

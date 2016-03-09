@@ -78,7 +78,6 @@ object  UnitConverter{
      * 由dp至px进行转换
      * 例如 dip2px(1) 将得到1dp对应的px值
      * @param dpValue
-     * *
      * @return
      */
     fun dip2px(dpValue: Float): Int {
@@ -90,7 +89,6 @@ object  UnitConverter{
      * 由dp至px进行转换
      * 例如 px2dip(1) 将得到1px对应的dp值
      * @param pxValue
-     * *
      * @return
      */
     fun px2dip(pxValue: Float): Int {
@@ -101,9 +99,7 @@ object  UnitConverter{
     /**
      * 84坐标系转大地2000
      * @param lon 经度
-     * *
      * @param lat 纬度
-     * *
      * @return
      */
     fun WGS84ToCGCS2000(lon: Double, lat: Double): LatLon {
