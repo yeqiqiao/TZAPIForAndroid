@@ -10,13 +10,11 @@ import android.support.v4.util.ArrayMap;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.tianzunchina.android.api.R;
 import com.tianzunchina.android.api.network.TZCommonListTZWebService;
-import com.tianzunchina.android.api.utils.TimeConverter;
 import com.tianzunchina.android.api.view.InstalList;
 
 import org.json.JSONArray;

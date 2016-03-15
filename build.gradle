@@ -10,7 +10,6 @@ buildscript {
         // in the individual module build.gradle files
     }
 }
-/*
 
 allprojects {
     repositories {
@@ -32,9 +31,9 @@ repositories {
     mavenCentral();
 }
 
-artifacts {
-    archives file('tzapi4android.aar')
-}
+//artifacts {
+//    archives file('tzapi4android.aar')
+//}
 
 signing {
     sign configurations.archives
@@ -85,4 +84,4 @@ uploadArchives {
             }
         }
     }
-}*/
+}

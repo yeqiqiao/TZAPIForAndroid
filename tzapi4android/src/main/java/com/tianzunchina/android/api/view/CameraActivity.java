@@ -1,6 +1,5 @@
 package com.tianzunchina.android.api.view;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.content.res.Configuration;
@@ -23,13 +22,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.tianzunchina.android.api.R;
-import com.tianzunchina.android.api.utils.FileCache;
-import com.tianzunchina.android.api.utils.PhotoTools;
 
 import java.io.File;
 import java.lang.reflect.Method;
 
-public class CameraActivity extends Activity {
+public class CameraActivity extends TZActivity {
 	private static AlertDialog alertDialog;
 	private TextView btnTake;
 	private TextView btnTake2;
@@ -105,7 +102,7 @@ public class CameraActivity extends Activity {
 	                public void onAutoFocus(boolean success, Camera camera) {
 	                    if(success){
 	                        camera.cancelAutoFocus();
-	                    }  
+	                    }
 	                }
 	            });
 			}
@@ -126,7 +123,7 @@ public class CameraActivity extends Activity {
 	protected void onResume() {
 		super.onResume();
 	}
-	
+
 	@Override
 	protected void onDestroy() {
 		super.onDestroy();
