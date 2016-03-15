@@ -1,6 +1,8 @@
 package com.tianzunchina.android.api.login;
 
 
+import com.tianzunchina.android.api.utils.LoginConfig;
+
 /**
  * 登录信息实体类
  * CraetTime 2016-3-3

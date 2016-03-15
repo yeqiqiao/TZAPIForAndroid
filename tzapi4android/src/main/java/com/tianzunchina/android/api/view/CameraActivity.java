@@ -22,6 +22,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.tianzunchina.android.api.R;
+import com.tianzunchina.android.api.base.TZActivity;
+import com.tianzunchina.android.api.utils.FileCache;
+import com.tianzunchina.android.api.utils.PhotoTools;
 
 import java.io.File;
 import java.lang.reflect.Method;
@@ -33,8 +36,8 @@ public class CameraActivity extends TZActivity {
 	private SurfaceView surfaceView;
 	private Camera tzCamera;
 	private int angle = 0;
-	private PhotoTools pt = PhotoTools.INSTANCE;
-	private FileCache cache = FileCache.INSTANCE;
+	private PhotoTools pt = PhotoTools.getInstence();
+	private FileCache cache = new FileCache();
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {

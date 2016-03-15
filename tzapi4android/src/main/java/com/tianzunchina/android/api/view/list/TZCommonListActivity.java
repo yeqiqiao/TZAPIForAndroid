@@ -15,6 +15,7 @@ import android.widget.Toast;
 
 import com.tianzunchina.android.api.R;
 import com.tianzunchina.android.api.network.TZCommonListTZWebService;
+import com.tianzunchina.android.api.utils.TimeConverter;
 import com.tianzunchina.android.api.view.InstalList;
 
 import org.json.JSONArray;
@@ -149,7 +150,7 @@ public abstract class TZCommonListActivity<T> extends Activity implements XListV
         if (skip == 0) {
             listData.clear();
             listData.addAll(list);
-            mListView.setRefreshTime(TimeConverter.INSTANCE.date2Str(new Date(),"MM-dd HH:mm"));
+            mListView.setRefreshTime(TimeConverter.date2Str(new Date(),"MM-dd HH:mm"));
         } else {
             for (T t : list) {
                 if (!listData.contains(t)) {
