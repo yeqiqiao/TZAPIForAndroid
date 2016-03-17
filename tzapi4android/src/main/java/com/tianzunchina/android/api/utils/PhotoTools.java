@@ -20,7 +20,9 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.lang.ref.WeakReference;
+import java.net.HttpURLConnection;
 import java.net.URL;
 
 
@@ -133,6 +135,12 @@ public class PhotoTools {
         return file;
     }
 
+    public File saveBitmap(Bitmap bitmap, String fileName) {
+        File file = new File(fileCache.getCacheDir(), fileName);
+        saveBitmap(bitmap, file);
+        return file;
+    }
+
     public File saveBitmap(Bitmap bitmap, URL url) {
         File file = new File(fileCache.getCacheDir(), fileCache.url2fileName(url));
         saveBitmap(bitmap, file);
@@ -149,32 +157,28 @@ public class PhotoTools {
     }
 
     public Bitmap zoomBitmap(Bitmap source) {
-        return zoomBitmap(source, 800, 600);
+        return zoomBitmap(source, 1024, 768);
     }
 
     /**
      * 按比例缩放尺寸
      */
     public Bitmap zoomBitmap(Bitmap source, int width, int height) {
-        int oldW = source.getWidth();
-        int oldH = source.getHeight();
-        if (oldW < oldH) {
-            int tmp = height;
-            height = width;
-            width = tmp;
+        if (source == null) {
+            return null;
         }
-        int w = Math.round((float) oldW / width);
-        int h = Math.round((float) oldH / height);
-        int newW = 0;
-        int newH = 0;
-        if (w <= 1 && h <= 1) {
-            return source;
+        int w = source.getWidth();
+        int h = source.getHeight();
+        Matrix matrix = new Matrix();
+        float scaleWidth = ((float) width / w);
+        float scaleHeight = ((float) height / h);
+        float scale = scaleWidth;
+        if(scaleWidth > scaleHeight){
+            scale = scaleHeight;
         }
-        int i = w > h ? w : h;
-        newW = oldW / i;
-        newH = oldH / i;
-        Bitmap imgThumb = ThumbnailUtils.extractThumbnail(source, newW, newH);
-        return imgThumb;
+        matrix.postScale(scale, scale);
+        Bitmap newbmp = Bitmap.createBitmap(source, 0, 0, w, h, matrix, true);
+        return newbmp;
     }
 
     public Bitmap createThumbnail(Bitmap source) {
@@ -228,10 +232,7 @@ public class PhotoTools {
             System.runFinalization();
             mRotateBitmap = Bitmap.createBitmap(bitmap, 0, 0, width, height,
                     matrix, true);
-            // return bitmap;
         }
-        matrix = null;
-        bitmap = null;
         return mRotateBitmap;
     }
 
@@ -249,16 +250,90 @@ public class PhotoTools {
         }
     }
 
-    public Bitmap getBitmapFromPath(String filePath) {
-        BitmapFactory.Options options = new BitmapFactory.Options();
-        options.inPreferredConfig = Bitmap.Config.RGB_565;// 表示16位位图
-        // 565代表对应三原色占的位数
-        options.inInputShareable = true;
-        options.inPurgeable = true;
-        Bitmap bitmap = BitmapFactory.decodeFile(filePath, options);
+    /*
+	 * 获取指定url中的图片
+	 */
+    public Bitmap getBitMap(URL url) {
+        Bitmap bitmap = null;
+        try {
+            HttpURLConnection connection = (HttpURLConnection) url
+                    .openConnection();
+            connection.setDoInput(true);
+            connection.connect();
+            InputStream inputStream = connection.getInputStream();
+            bitmap = BitmapFactory.decodeStream(inputStream);
+            inputStream.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         return bitmap;
     }
 
+    public Bitmap getBitmapFromPath(String filePath){
+        return getBitmapFromPath(filePath, true);
+    }
+
+    /**
+     *
+     * @param filePath
+     * @param isSample
+     * @return
+     */
+    public Bitmap getBitmapFromPath(String filePath, boolean isSample) {
+        Bitmap bitmap = null;
+        BitmapFactory.Options opts = new BitmapFactory.Options();
+        opts.inJustDecodeBounds = true;
+        BitmapFactory.decodeFile(filePath, opts);
+
+        if(isSample){
+            opts.inSampleSize = computeSampleSize(opts, -1, 1024*768);
+            opts.inJustDecodeBounds = false;
+        }
+        try {
+            bitmap = BitmapFactory.decodeFile(filePath, opts);
+        }catch (Exception e) {
+            // TODO: handle exception
+        }
+        return bitmap;
+    }
+
+    public static int computeSampleSize(BitmapFactory.Options options, int minSideLength, int maxNumOfPixels) {
+        int initialSize = computeInitialSampleSize(options, minSideLength, maxNumOfPixels);
+        int roundedSize;
+        if (initialSize <= 8) {
+            roundedSize = 1;
+            while (roundedSize < initialSize) {
+                roundedSize <<= 1;
+            }
+        } else {
+            roundedSize = (initialSize + 7) / 8 * 8;
+        }
+        return roundedSize;
+    }
+
+    private static int computeInitialSampleSize(BitmapFactory.Options options, int minSideLength, int maxNumOfPixels) {
+        double w = options.outWidth;
+        double h = options.outHeight;
+        int lowerBound = (maxNumOfPixels == -1) ? 1 : (int) Math.ceil(Math.sqrt(w * h / maxNumOfPixels));
+        int upperBound = (minSideLength == -1) ? 256 : (int) Math.min(Math.floor(w / minSideLength), Math.floor(h / minSideLength));
+        if (upperBound < lowerBound) {
+            // return the larger one when there is no overlapping zone.
+            return lowerBound;
+        }
+        if ((maxNumOfPixels == -1) && (minSideLength == -1)) {
+            return 1;
+        } else if (minSideLength == -1) {
+            return lowerBound;
+        } else {
+            return upperBound;
+        }
+    }
+
+    /**
+     * 获得照片旋转角度
+     * @param filepath
+     * @return
+     */
     public int getExifOrientation(String filepath) {
         int degree = 0;
         ExifInterface exif = null;

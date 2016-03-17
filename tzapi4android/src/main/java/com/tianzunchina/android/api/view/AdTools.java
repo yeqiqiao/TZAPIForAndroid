@@ -156,7 +156,6 @@ public class AdTools extends FrameLayout implements Runnable {
 
 	/**
 	 * 设置数据
-	 * 
 	 * @param urls
 	 */
 	public void setData(String[] urls, String[] _titlesString,
@@ -205,7 +204,6 @@ public class AdTools extends FrameLayout implements Runnable {
 	@Override
 	public void run() {
 		Thread thisThread = Thread.currentThread();
-		// while (blinker == thisThread) {
 		while (!Thread.interrupted() && thisThread == thread) {
 			try {
 				Thread.sleep(1000 * sleepTime);
@@ -218,12 +216,10 @@ public class AdTools extends FrameLayout implements Runnable {
 				handler.sendMessage(Message.obtain(handler));
 			}
 		}
-		thisThread = null;
 	}
 
 	@SuppressLint("ClickableViewAccessibility")
 	class PageTounchListener implements OnTouchListener {
-
 		@Override
 		public boolean onTouch(View v, MotionEvent event) {
 			switch (event.getAction()) {
@@ -274,7 +270,6 @@ public class AdTools extends FrameLayout implements Runnable {
 				}
 			}
 		}
-
 	}
 
 	/**

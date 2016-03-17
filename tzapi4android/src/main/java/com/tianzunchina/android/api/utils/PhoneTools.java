@@ -23,6 +23,16 @@ public class PhoneTools {
     TZApplication app = TZApplication.getInstence();
     TelephonyManager tm = (TelephonyManager) app.getSystemService(Context.TELEPHONY_SERVICE);
     PackageManager pm = app.getPackageManager();
+    private static PhoneTools instence;
+
+    private PhoneTools(){}
+
+    public static PhoneTools getInstence(){
+        if(instence == null){
+            instence = new PhoneTools();
+        }
+        return instence;
+    }
 
     /**
      * 应用版本号
@@ -58,7 +68,7 @@ public class PhoneTools {
      * 唯一的设备ID： GSM手机的 IMEI 和 CDMA手机的 MEID.
      * @return 获得设备ID
      */
-    String getDeviceId(){
+    public String getDeviceId(){
         return tm.getDeviceId();
     }
 
@@ -66,7 +76,7 @@ public class PhoneTools {
      * 手机号码
      * @return 获取本机号码
      */
-    String getPhoneNumber(){
+    public String getPhoneNumber(){
         return tm.getLine1Number();
     }
 
@@ -123,7 +133,7 @@ public class PhoneTools {
      * 打开GPS定位设置页面
      * @param activity
      */
-    public void  openGPSSetting(Activity activity ) {
+    public void openGPSSetting(Activity activity ) {
         openSetting(activity, SETTING_GPS);
     }
 

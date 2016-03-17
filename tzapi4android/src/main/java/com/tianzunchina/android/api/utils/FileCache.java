@@ -6,11 +6,17 @@ import com.tianzunchina.android.api.control.TZApplication;
 
 import java.io.File;
 import java.net.URL;
+import java.util.Date;
 
 /**
  * Created by admin on 2016/3/15 0015.
  */
 public class FileCache {
+    public boolean haveSDCard(){
+        return Environment.getExternalStorageState().equals(
+                Environment.MEDIA_MOUNTED);
+    }
+
     /**
      * 获得一个隐藏的缓存目录
      * @return 缓存目录
@@ -22,6 +28,16 @@ public class FileCache {
             dir.mkdir();
         }
         return dir;
+    }
+
+    public File getCacheJPG() {
+        int count = 0;
+        File file;
+        do{
+            file = new File(getCacheDir(), TimeConverter.SDF_FILE.format(new Date())  + "_" + count + ".jpg");
+            count ++;
+        } while (file.exists());
+        return file;
     }
 
     /**
