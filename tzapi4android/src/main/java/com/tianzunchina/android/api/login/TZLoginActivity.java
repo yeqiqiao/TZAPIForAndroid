@@ -7,7 +7,8 @@ import android.os.PersistableBundle;
 import com.tianzunchina.android.api.base.TZActivity;
 
 /**
- * Created by admin on 2016/3/22 0022.
+ * CraetTime 2016-3-22
+ * @author SunLiang
  */
 public class TZLoginActivity extends TZActivity implements LoginListenner {
     @Override
