@@ -19,6 +19,11 @@ import android.widget.TextView;
 
 import com.tianzunchina.android.api.R;
 
+/**
+ * 下拉刷新列表头部
+ * CraetTime 2016-3-14
+ * @author SunLiang
+ */
 public class XListViewHeader extends LinearLayout {
 	private LinearLayout mContainer;
 	private ImageView mArrowImageView;

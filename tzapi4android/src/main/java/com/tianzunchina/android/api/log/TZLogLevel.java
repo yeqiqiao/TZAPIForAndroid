@@ -1,7 +1,9 @@
 package com.tianzunchina.android.api.log;
 
 /**
- * Created by admin on 2016/3/9 0009.
+ * 日志等级
+ * CraetTime 2016-3-14
+ * @author SunLiang
  */
 public class TZLogLevel {
     /**

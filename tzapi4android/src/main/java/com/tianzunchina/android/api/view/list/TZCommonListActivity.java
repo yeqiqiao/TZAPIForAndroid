@@ -27,7 +27,9 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * Created by sl on 2015/10/22.
+ * 标准列表页面
+ * CraetTime 2016-3-14
+ * @author SunLiang
  */
 public abstract class TZCommonListActivity<T> extends Activity implements XListView.IXListViewListener,
         View.OnClickListener, AdapterView.OnItemClickListener {

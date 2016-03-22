@@ -15,6 +15,12 @@ import android.widget.TextView;
 
 import com.tianzunchina.android.api.R;
 
+
+/**
+ * 下拉刷新列表底部
+ * CraetTime 2016-3-14
+ * @author SunLiang
+ */
 public class XListViewFooter extends LinearLayout {
 	public final static int STATE_NORMAL = 0;
 	public final static int STATE_READY = 1;

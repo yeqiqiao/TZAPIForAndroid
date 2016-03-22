@@ -24,6 +24,12 @@ import android.widget.TextView;
 
 import com.tianzunchina.android.api.R;
 
+
+/**
+ * 下拉刷新列表
+ * CraetTime 2016-3-14
+ * @author SunLiang
+ */
 public class XListView extends ListView implements OnScrollListener {
 
 	private float mLastY = -1; // save event y

@@ -25,10 +25,16 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
-import com.tianzunchina.android.api.utils.CircleTransform;
+import com.tianzunchina.android.api.utils.image.CircleTransform;
 
 import java.io.File;
 
+
+/**
+ * 列表item缓存类
+ * CraetTime 2016-3-14
+ * @author SunLiang
+ */
 public class TZViewHolder {
     private SparseArray<View> mViews;
     private int mPosition;

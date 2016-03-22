@@ -28,6 +28,10 @@ import com.tianzunchina.android.api.utils.PhotoTools;
 import java.io.File;
 import java.lang.reflect.Method;
 
+/**
+ * CraetTime 2016-3-14
+ * @author SunLiang
+ */
 public class CameraActivity extends Activity {
 	private static AlertDialog alertDialog;
 	private TextView btnTake;
@@ -41,6 +45,7 @@ public class CameraActivity extends Activity {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+
 		// 窗口特效为无标题
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		// 设置窗口全屏

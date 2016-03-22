@@ -11,7 +11,8 @@ import java.util.Map;
 
 /**
  * 用户实体类
- * Created by admin on 2016/3/3 0003.
+ * CraetTime 2016-3-3
+ * @author SunLiang
  */
 public class User implements Serializable {
 
@@ -25,7 +26,7 @@ public class User implements Serializable {
     private String phoneNum; // 手机号
     private String address; // 居住地址
     private String email;
-    private String headPath;
+    private String headPath; //头像路径
     private String nickName;//昵称
 
     private Map<String, String> attributeMap;

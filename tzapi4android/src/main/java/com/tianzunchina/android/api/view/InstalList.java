@@ -4,7 +4,8 @@ import java.io.Serializable;
 
 /**
  * 列表页面参数
- * Created by sl on 2015/10/22.
+ * CraetTime 2016-3-14
+ * @author SunLiang
  */
 public class InstalList implements Serializable{
     private String webServiceUrl;//列表接口文件地址

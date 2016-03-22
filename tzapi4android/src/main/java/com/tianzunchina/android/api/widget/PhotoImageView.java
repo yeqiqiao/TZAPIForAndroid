@@ -7,7 +7,8 @@ import android.util.AttributeSet;
 import android.view.View;
 
 /**
- * Created by admin on 2016/3/16 0016.
+ * CraetTime 2016-3-14
+ * @author SunLiang
  */
 public class PhotoImageView extends View {
 
@@ -28,6 +29,4 @@ public class PhotoImageView extends View {
     public PhotoImageView(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
     }
-
-
 }

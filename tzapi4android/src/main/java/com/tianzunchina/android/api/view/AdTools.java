@@ -29,6 +29,8 @@ import java.util.List;
 
 /**
  * 广告展示控件【图片滚动展示】
+ * CraetTime 2016-3-14
+ * @author SunLiang
  */
 @SuppressLint("HandlerLeak")
 public class AdTools extends FrameLayout implements Runnable {

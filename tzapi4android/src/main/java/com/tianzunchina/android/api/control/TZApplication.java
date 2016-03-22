@@ -3,7 +3,8 @@ package com.tianzunchina.android.api.control;
 import android.app.Application;
 
 /**
- * Created by admin on 2016/3/14 0014.
+ * CraetTime 2016-3-14
+ * @author SunLiang
  */
 public class TZApplication extends Application {
     private static TZApplication instence;

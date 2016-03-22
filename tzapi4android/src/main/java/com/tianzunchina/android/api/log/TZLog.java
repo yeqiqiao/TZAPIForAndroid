@@ -3,7 +3,9 @@ package com.tianzunchina.android.api.log;
 import android.util.Log;
 
 /**
- * Created by admin on 2016/3/9 0009.
+ * 日志操作类
+ * CraetTime 2016-3-14
+ * @author SunLiang
  */
 public class TZLog {
     private static int showLv = 0;
