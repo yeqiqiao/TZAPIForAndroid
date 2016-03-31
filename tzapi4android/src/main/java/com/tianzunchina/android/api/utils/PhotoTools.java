@@ -118,8 +118,6 @@ public class PhotoTools {
             bitmap.compress(CompressFormat.JPEG, 80, out);
             out.flush();
             out.close();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }

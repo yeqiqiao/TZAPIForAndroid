@@ -8,9 +8,6 @@ import android.widget.TextView;
 public class TextUtil {
     public static boolean isNull(TextView et) {
         String text = et.getText().toString().trim();
-        if (text.equals("")) {
-            return true;
-        }
-        return false;
+        return text.equals("");
     }
 }

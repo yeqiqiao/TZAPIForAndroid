@@ -17,12 +17,10 @@ import android.graphics.drawable.Drawable;
  */
 public class CircleImageDrawable extends Drawable {
 
-    private Bitmap mBitmap;
     private Paint mPaint;
     private int mWidth;
 
     public CircleImageDrawable(Bitmap mBitmap){
-        this.mBitmap = mBitmap;
         BitmapShader bitmapShader = new BitmapShader(mBitmap, Shader.TileMode.CLAMP,
                 Shader.TileMode.CLAMP);
         mPaint = new Paint();

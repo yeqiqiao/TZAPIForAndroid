@@ -2,7 +2,7 @@ package com.tianzunchina.android.api.utils;
 
 import android.os.Environment;
 
-import com.tianzunchina.android.api.control.TZApplication;
+import com.tianzunchina.android.api.base.TZApplication;
 
 import java.io.File;
 import java.net.URL;
@@ -23,7 +23,7 @@ public class FileCache {
      */
     public File getCacheDir() {
         File dir = new File(Environment.getExternalStorageDirectory(),
-                "." + TZApplication.getInstence().getPackageName());
+                "." + TZApplication.getInstance().getPackageName());
         if (!dir.exists()) {
             dir.mkdir();
         }
@@ -66,10 +66,7 @@ public class FileCache {
      */
     public Boolean haveCache(String urlStr){
         File file = getSaveFile(urlStr);
-        if (file != null && file.exists()) {
-            return true;
-        }
-        return false;
+        return file != null && file.exists();
     }
 
     /**

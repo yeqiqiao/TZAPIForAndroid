@@ -11,5 +11,5 @@ public class TZLogLevel {
      * WARN：警告信息
      * ERROR：报错信息
      */
-    public static final int INFO = 1, WARN = 2, ERROR = 3;
+    public static final int INFO = 3, WARN = 2, ERROR = 1;
 }

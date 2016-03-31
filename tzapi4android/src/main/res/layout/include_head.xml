@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/app_background_bule">
@@ -9,28 +10,35 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
         android:layout_centerVertical="true"
         android:paddingBottom="@dimen/activity_head_padding"
-        android:paddingLeft="@dimen/activity_head_padding"
+        android:paddingStart="@dimen/activity_head_padding"
         android:paddingTop="@dimen/activity_head_padding"
         android:text="@string/title_menu_my_case_back"
         android:ems="4"
+        android:gravity="center"
         android:textColor="@color/activity_head_text"
-        android:textSize="@dimen/activity_head_textsize" />
+        android:textSize="@dimen/activity_head_textsize"
+        android:paddingLeft="@dimen/activity_head_padding" />
     <TextView
         android:id="@+id/tvList"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
         android:layout_centerVertical="true"
         android:paddingBottom="@dimen/activity_head_padding"
         android:paddingRight="@dimen/activity_head_padding"
+        android:paddingEnd="@dimen/activity_head_padding"
         android:paddingTop="@dimen/activity_head_padding"
         android:text="@string/title_menu_my_case_list"
+        android:ems="4"
         android:gravity="center"
         android:ellipsize="end"
         android:textColor="@color/activity_head_text"
-        android:textSize="@dimen/activity_head_textsize" />
+        android:textSize="@dimen/activity_head_textsize"
+        tools:ignore="RtlHardcoded" />
 
     <TextView
         android:id="@+id/tvTitle"
@@ -38,7 +46,9 @@
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
         android:layout_toLeftOf="@id/tvList"
+        android:layout_toStartOf="@id/tvList"
         android:layout_toRightOf="@id/tvBack"
+        android:layout_toEndOf="@id/tvBack"
         android:ellipsize="end"
         android:gravity="center"
         android:paddingBottom="@dimen/activity_head_padding"

@@ -39,9 +39,7 @@ public class User implements Serializable {
     }
 
     private boolean isNull(String str) {
-        if (null == str || "null".equals(str) || "".equals(str) || 0 == str.length())
-            return true;
-        return false;
+        return null == str || "null".equals(str) || "".equals(str) || 0 == str.length();
     }
 
     @Override

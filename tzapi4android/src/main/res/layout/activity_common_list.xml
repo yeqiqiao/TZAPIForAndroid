@@ -9,7 +9,7 @@
         android:layout_height="wrap_content"
         layout="@layout/include_head" />
 
-    <com.qware.mqedt.widget.XListView
+    <com.tianzunchina.android.api.view.list.XListView
         android:id="@+id/list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -17,5 +17,5 @@
         android:divider="@null"
         android:listSelector="@android:color/transparent"
         android:scrollbars="none">
-    </com.qware.mqedt.widget.XListView>
+    </com.tianzunchina.android.api.view.list.XListView>
 </RelativeLayout>

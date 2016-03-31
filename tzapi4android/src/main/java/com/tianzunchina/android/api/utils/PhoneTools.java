@@ -10,7 +10,7 @@ import android.net.Uri;
 import android.provider.Settings;
 import android.telephony.TelephonyManager;
 
-import com.tianzunchina.android.api.control.TZApplication;
+import com.tianzunchina.android.api.base.TZApplication;
 
 import java.io.File;
 
@@ -20,7 +20,7 @@ import java.io.File;
  * @author SunLiang
  */
 public class PhoneTools {
-    TZApplication app = TZApplication.getInstence();
+    TZApplication app = TZApplication.getInstance();
     TelephonyManager tm = (TelephonyManager) app.getSystemService(Context.TELEPHONY_SERVICE);
     PackageManager pm = app.getPackageManager();
     private static PhoneTools instence;

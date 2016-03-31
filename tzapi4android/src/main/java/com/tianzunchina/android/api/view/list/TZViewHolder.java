@@ -263,7 +263,7 @@ public class TZViewHolder {
     }
 
     public TZViewHolder setChecked(int viewId, boolean checked) {
-        Checkable view = (Checkable) getView(viewId);
+        Checkable view = getView(viewId);
         view.setChecked(checked);
         return this;
     }
@@ -301,7 +301,7 @@ public class TZViewHolder {
     }
 
     public TZViewHolder setStarNumber(int viewId, int number){
-        RatingBar v = (RatingBar)getView(viewId);
+        RatingBar v = getView(viewId);
         v.setRating(number);
         return this;
     }

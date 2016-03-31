@@ -26,8 +26,6 @@ public class XListViewFooter extends LinearLayout {
 	public final static int STATE_READY = 1;
 	public final static int STATE_LOADING = 2;
 
-	private Context mContext;
-
 	private View mContentView;
 	private View mProgressBar;
 	private TextView mHintView;
@@ -106,8 +104,7 @@ public class XListViewFooter extends LinearLayout {
 	}
 
 	private void initView(Context context) {
-		mContext = context;
-		LinearLayout moreView = (LinearLayout)LayoutInflater.from(mContext).inflate(R.layout.xlistview_footer, null);
+		LinearLayout moreView = (LinearLayout)LayoutInflater.from(context).inflate(R.layout.xlistview_footer, null);
 		addView(moreView);
 		moreView.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
 		

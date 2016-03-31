@@ -4,7 +4,7 @@ import android.app.Activity;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 
-import com.tianzunchina.android.api.control.TZApplication;
+import com.tianzunchina.android.api.base.TZApplication;
 
 /**
  * 配置信息管理的父类
@@ -15,13 +15,13 @@ import com.tianzunchina.android.api.control.TZApplication;
 public class Config {
     private SharedPreferences share = null;
     private Editor editor = null;
-    private String PREFERENCE_NAME = "saveInfo";
+    private static  final String PREFERENCE_NAME = "saveInfo";
     /**
      * @return 获取一个唯一的私有的SharedPreferences
      */
     private void initSP() {
         if (share == null) {
-            share = TZApplication.getInstence().getSharedPreferences(PREFERENCE_NAME, Activity.MODE_PRIVATE);
+            share = TZApplication.getInstance().getSharedPreferences(PREFERENCE_NAME, Activity.MODE_PRIVATE);
         }
     }
 
@@ -35,7 +35,7 @@ public class Config {
                 initSP();
             }
             editor = share.edit();
-            editor.commit();
+            editor.apply();
         }
     }
 

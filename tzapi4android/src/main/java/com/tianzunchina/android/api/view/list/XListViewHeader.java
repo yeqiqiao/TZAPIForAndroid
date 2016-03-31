@@ -34,7 +34,7 @@ public class XListViewHeader extends LinearLayout {
 	private Animation mRotateUpAnim;
 	private Animation mRotateDownAnim;
 	
-	private final int ROTATE_ANIM_DURATION = 180;
+	private static final int ROTATE_ANIM_DURATION = 180;
 	
 	public final static int STATE_NORMAL = 0;
 	public final static int STATE_READY = 1;

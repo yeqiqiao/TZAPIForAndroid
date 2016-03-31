@@ -5,9 +5,9 @@ import android.content.ClipboardManager;
 import android.content.Context;
 import android.os.Build;
 import android.view.View;
-import android.widget.Toast;
 
-import com.tianzunchina.android.api.control.TZApplication;
+import com.tianzunchina.android.api.base.TZApplication;
+import com.tianzunchina.android.api.log.TZToastTool;
 
 /**
  * 长按复制文本框内容
@@ -40,13 +40,14 @@ public class LongClickCopyListener implements View.OnLongClickListener {
 		 * 所以此处会标记过时
 		 */
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
-            ClipboardManager cmb = (ClipboardManager) TZApplication.getInstence().getSystemService(Context.CLIPBOARD_SERVICE);
+            ClipboardManager cmb = (ClipboardManager) TZApplication.getInstance().getSystemService(Context.CLIPBOARD_SERVICE);
             cmb.setPrimaryClip(ClipData.newPlainText(null, v.toString()));
         } else {
-            android.text.ClipboardManager cmb = (android.text.ClipboardManager) TZApplication.getInstence().getSystemService(Context.CLIPBOARD_SERVICE);
+            android.text.ClipboardManager cmb = (android.text.ClipboardManager) TZApplication.getInstance().getSystemService(Context.CLIPBOARD_SERVICE);
             cmb.setText(v.toString());
         }
-        Toast.makeText(TZApplication.getInstence(), info, Toast.LENGTH_SHORT).show();
+
+        TZToastTool.nssential(info);
         return false;
     }
 }

@@ -22,6 +22,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.tianzunchina.android.api.R;
+import com.tianzunchina.android.api.log.TZToastTool;
 import com.tianzunchina.android.api.utils.FileCache;
 import com.tianzunchina.android.api.utils.PhotoTools;
 
@@ -36,7 +37,6 @@ public class CameraActivity extends Activity {
 	private static AlertDialog alertDialog;
 	private TextView btnTake;
 	private TextView btnTake2;
-	private SurfaceView surfaceView;
 	private Camera tzCamera;
 	private int angle = 0;
 	private PhotoTools pt = PhotoTools.getInstence();
@@ -45,16 +45,16 @@ public class CameraActivity extends Activity {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-
 		// 窗口特效为无标题
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		// 设置窗口全屏
 		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
 				WindowManager.LayoutParams.FLAG_FULLSCREEN);
 		setContentView(R.layout.activity_camera);
+
 		btnTake = (TextView) findViewById(R.id.btnTakePicture);
 		btnTake2 = (TextView) findViewById(R.id.btnTakePicture2);
-		surfaceView = (SurfaceView) findViewById(R.id.svCamera);
+		SurfaceView surfaceView = (SurfaceView) findViewById(R.id.svCamera);
 		// 保持屏幕高亮
 		surfaceView.getHolder()
 				.setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);
@@ -75,22 +75,28 @@ public class CameraActivity extends Activity {
 		surfaceView.getHolder().addCallback(new SurfaceHolder.Callback() {
 			@Override
 			public void surfaceCreated(SurfaceHolder holder) {
-				// 打开摄像头
-				if (tzCamera == null) {
-					tzCamera = Camera.open();
-					try {
-						tzCamera.setDisplayOrientation(90);
-						angle = 90;
-						tzCamera.setPreviewDisplay(holder);
-					} catch (Exception e) {
-						e.printStackTrace();
-						if (tzCamera != null) {
-							tzCamera.setPreviewCallback(null);
-							tzCamera.release();
-							tzCamera = null;
+				try{
+					// 打开摄像头
+					if (tzCamera == null) {
+						tzCamera = Camera.open();
+						try {
+							tzCamera.setDisplayOrientation(90);
+							angle = 90;
+							tzCamera.setPreviewDisplay(holder);
+						} catch (Exception e) {
+							e.printStackTrace();
+							if (tzCamera != null) {
+								tzCamera.setPreviewCallback(null);
+								tzCamera.release();
+								tzCamera = null;
+							}
 						}
 					}
+				} catch (Exception e){
+					finish();
+					TZToastTool.nssential("摄像头授权有误, 是否已禁止调用摄像头");
 				}
+
 			}
 
 			@Override
@@ -163,7 +169,8 @@ public class CameraActivity extends Activity {
 			}
 		} catch (Exception e) {
 			closeDialog();
-			Toast.makeText(this, "相机自动对焦失败!", Toast.LENGTH_SHORT).show();
+			TZToastTool.nssential( "相机自动对焦失败!");
+//			Toast.makeText(this, "相机自动对焦失败!", Toast.LENGTH_SHORT).show();
 		}
 
 	}
@@ -219,8 +226,7 @@ public class CameraActivity extends Activity {
 				closeDialog();
 				finish();
 			} else {
-				Toast.makeText(getApplicationContext(), "请检查SD卡",
-						Toast.LENGTH_LONG).show();
+				TZToastTool.nssential("请检查SD卡");
 			}
 		}
 	};
@@ -231,9 +237,9 @@ public class CameraActivity extends Activity {
 		} else {
 			Method downPolymorphic;
 			try {
-				downPolymorphic = camera.getClass().getMethod("setDisplayOrientation", new Class[]{int.class});
+				downPolymorphic = camera.getClass().getMethod("setDisplayOrientation", int.class);
 				if (downPolymorphic != null)
-					downPolymorphic.invoke(camera, new Object[]{orientation});
+					downPolymorphic.invoke(camera, orientation);
 			} catch (Exception e1) {
 				e1.printStackTrace();
 			}

@@ -3,7 +3,7 @@ package com.tianzunchina.android.api.utils;
 import android.app.Application;
 import android.util.Base64;
 
-import com.tianzunchina.android.api.control.TZApplication;
+import com.tianzunchina.android.api.base.TZApplication;
 import com.tianzunchina.android.api.utils.model.LatLon;
 import com.tianzunchina.android.api.utils.trans.Trans;
 
@@ -20,7 +20,7 @@ import java.io.InputStream;
  */
 public class UnitConverter {
     private static UnitConverter converter;
-    private Application app = TZApplication.getInstence();
+    private Application app = TZApplication.getInstance();
 
     public static UnitConverter getInstence(){
         if(converter == null){

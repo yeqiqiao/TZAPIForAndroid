@@ -7,6 +7,7 @@ import android.util.AttributeSet;
 import android.view.View;
 
 /**
+ * 照片控件(待开发)
  * CraetTime 2016-3-14
  * @author SunLiang
  */

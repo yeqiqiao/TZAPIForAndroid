@@ -8,9 +8,9 @@ package com.tianzunchina.android.api.utils;
  * 枚举正则表达式
  *
  */
-public enum Regex {
-	NO_HAN(1, "^[\u4E00-\u9FFF]+$"),//汉字
-	NO_HAN_SYMBOL(2, "^[/w]+&"); //限数字字母下划线
+public class Regex {
+	public static final String NO_HAN = "^[\u4E00-\u9FFF]+$";//汉字
+	public static final String NO_HAN_SYMBOL = "^[/w]+&"; //限数字字母下划线
 	
 	private int regexID;
 	private String regexStr;

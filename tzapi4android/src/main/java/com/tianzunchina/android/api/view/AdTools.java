@@ -87,7 +87,7 @@ public class AdTools extends FrameLayout implements Runnable {
 		// 为viewPager添加页面改变、接触监听
 		pageChangeListener = new PageChangeListener();
 		pageTounchListener = new PageTounchListener();
-		viewPager.setOnPageChangeListener(pageChangeListener);
+		viewPager.addOnPageChangeListener(pageChangeListener);
 		viewPager.setOnTouchListener(pageTounchListener);
 	}
 
@@ -118,8 +118,8 @@ public class AdTools extends FrameLayout implements Runnable {
 			// 设置圆点样式
 			dotView.setLayoutParams(dotViewParams);
 			// 设置ViewPager显示图片的页面内容
-			dotView.setBackgroundResource((i == 0) ? R.drawable.ico_ad_focused
-					: R.drawable.ico_ad_normal);
+			dotView.setBackgroundResource((i == 0) ? R.mipmap.ico_ad_focused
+					: R.mipmap.ico_ad_normal);
 			// 将每个圆点添加到圆点列表中存储
 			dotViews.add(dotView);
 			// 将每个圆点添加到页面上
@@ -174,7 +174,7 @@ public class AdTools extends FrameLayout implements Runnable {
 	}
 
 	public interface ClickListener {
-		public void onClick(int position);
+		void onClick(int position);
 	}
 
 	/**
@@ -267,8 +267,8 @@ public class AdTools extends FrameLayout implements Runnable {
 					// 不是当前选中的page，其小圆点设置为未选中的状态
 					dotViews.get(i)
 							.setBackgroundResource(
-									(position % dotViews.size() != i) ? R.drawable.ico_ad_normal
-											: R.drawable.ico_ad_focused);
+									(position % dotViews.size() != i) ? R.mipmap.ico_ad_normal
+											: R.mipmap.ico_ad_focused);
 				}
 			}
 		}
@@ -324,7 +324,7 @@ public class AdTools extends FrameLayout implements Runnable {
 		@Override
 		public Object instantiateItem(ViewGroup container, int position) {
 			try {
-				((ViewPager) container).addView(
+				container.addView(
 						mImageViews.get(position % mImageViews.size()), 0);
 			} catch (Exception e) {
 			}

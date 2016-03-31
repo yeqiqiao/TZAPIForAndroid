@@ -3,12 +3,15 @@ package com.tianzunchina.android.api.login;
 
 import com.tianzunchina.android.api.utils.LoginConfig;
 
+import java.io.Serializable;
+
 /**
  * 登录信息实体类
  * CraetTime 2016-3-3
  * @author SunLiang
  */
-public class SignInUser {
+public class SignInUser implements Serializable{
+    public static SignInUser GUEST = new SignInUser("访客");
     String account;
     String password;
     boolean isKeep = false;
@@ -40,6 +43,10 @@ public class SignInUser {
     public void  save(){
         LoginConfig config = new LoginConfig();
         config.saveUser(this);
+    }
+
+    public boolean noGuest(){
+        return !this.equals(GUEST);
     }
 
     public String getAccount() {

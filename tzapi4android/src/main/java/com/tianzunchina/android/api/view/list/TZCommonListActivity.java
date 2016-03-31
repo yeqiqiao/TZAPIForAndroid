@@ -4,17 +4,18 @@ import android.app.Activity;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
 import android.support.v4.util.ArrayMap;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.tianzunchina.android.api.R;
-import com.tianzunchina.android.api.network.TZCommonListTZWebService;
+import com.tianzunchina.android.api.log.TZLog;
+import com.tianzunchina.android.api.log.TZToastTool;
+import com.tianzunchina.android.api.network.TZCommonListSOAPWebAPI;
+import com.tianzunchina.android.api.network.TZRequest;
+import com.tianzunchina.android.api.network.WebCallBackListenner;
 import com.tianzunchina.android.api.utils.TimeConverter;
 import com.tianzunchina.android.api.view.InstalList;
 
@@ -32,13 +33,13 @@ import java.util.List;
  * @author SunLiang
  */
 public abstract class TZCommonListActivity<T> extends Activity implements XListView.IXListViewListener,
-        View.OnClickListener, AdapterView.OnItemClickListener {
+        View.OnClickListener, AdapterView.OnItemClickListener, WebCallBackListenner{
     private InstalList instalList;
     public TextView tvLeft, tvTitle, tvRight;
     protected XListView mListView;
     protected List<T> listData;
     protected TZCommonAdapter<T> adapter;
-    private TZCommonListTZWebService webService;
+    private TZCommonListSOAPWebAPI webAPI;
     private ArrayMap<String, Object> propertyMap;
     private int takeNumber = 10;
     private boolean isRefresh = true;
@@ -51,8 +52,6 @@ public abstract class TZCommonListActivity<T> extends Activity implements XListV
         initView();
     }
 
-
-    @Override
     protected void onResume() {
         super.onResume();
         if(isRefresh){
@@ -61,14 +60,21 @@ public abstract class TZCommonListActivity<T> extends Activity implements XListV
     }
 
     /**
-     *
-     * 需要调用
+     * 初始化参数
+     * @param webServiceUrl 接口服务器地址
+     * @param namespace WebService命名空间
+     * @param name 接口方法名
+     * @param skipNumber 跳过条数的参数名
+     * @param takeNumber 获得条数的参数名
+     * @param jsonList 数据在json中的位置 多层可用.分隔  例如Body.list
+     * @param timeOut 超时时间
+     * @param isRefresh onResume时是否需要刷新
      */
     protected void init(String webServiceUrl, String namespace, String name, String skipNumber,
                         String takeNumber, String jsonList, int timeOut, boolean isRefresh ){
         instalList = new InstalList(webServiceUrl, namespace, name, skipNumber, takeNumber, jsonList,
                 timeOut);
-        webService = new TZCommonListTZWebService(instalList, tzCommonListHandler);
+        webAPI = new TZCommonListSOAPWebAPI(instalList, this);
         listData = new ArrayList<T>();
         this.isRefresh = isRefresh;
     }
@@ -77,21 +83,21 @@ public abstract class TZCommonListActivity<T> extends Activity implements XListV
                         String takeNumber, String jsonList, int timeOut ){
         instalList = new InstalList(webServiceUrl, namespace, name, skipNumber, takeNumber, jsonList,
                 timeOut);
-        webService = new TZCommonListTZWebService(instalList, tzCommonListHandler);
+        webAPI = new TZCommonListSOAPWebAPI(instalList, this);
         listData = new ArrayList<T>();
         init(webServiceUrl,namespace,name,skipNumber,takeNumber,jsonList,timeOut,true);
     }
 
-    protected void setAdapter (TZCommonAdapter<T> adapter){
+    protected void setAdapter(TZCommonAdapter<T> adapter){
         this.adapter = adapter;
         mListView.setAdapter(adapter);
     }
 
     /**
      * 需调用设置title
-     * @param title
-     * @param leftName
-     * @param rightName
+     * @param title 页面标题
+     * @param leftName 左按钮显示文字
+     * @param rightName 右按钮显示文字
      */
     protected void setTitle(String title, String leftName, String rightName){
         tvTitle.setText(title);
@@ -101,7 +107,7 @@ public abstract class TZCommonListActivity<T> extends Activity implements XListV
 
     /**
      * 需调用设置title 默认左右按钮分别为返回及刷新
-     * @param title
+     * @param title 页面标题
      */
     protected void setTitle(String title){
         setTitle(title, "返回", "刷新");
@@ -131,6 +137,10 @@ public abstract class TZCommonListActivity<T> extends Activity implements XListV
         onRefresh();
     }
 
+    /**
+     *
+     * @param map
+     */
     protected void setWebServicePropertys(ArrayMap<String, Object> map){
         propertyMap = map;
     }
@@ -187,7 +197,7 @@ public abstract class TZCommonListActivity<T> extends Activity implements XListV
         new Thread(){
             @Override
             public void run() {
-                webService.getList(0, takeNumber, getWebServicePropertys());
+                webAPI.getList(0, takeNumber, getWebServicePropertys());
             }
         }.start();
     }
@@ -197,7 +207,7 @@ public abstract class TZCommonListActivity<T> extends Activity implements XListV
         new Thread(){
             @Override
             public void run() {
-                webService.getList(listData.size(), takeNumber, getWebServicePropertys());
+                webAPI.getList(listData.size(), takeNumber, getWebServicePropertys());
             }
         }.start();
     }
@@ -218,47 +228,52 @@ public abstract class TZCommonListActivity<T> extends Activity implements XListV
         }
     }
 
-    private Handler tzCommonListHandler = new Handler() {
-        @Override
-        public void handleMessage(Message msg) {
-            String info = "";
-            switch (msg.arg1) {
-                case 1:
-                    try {
-                        JSONObject body = (JSONObject) msg.obj;
-                        JSONArray jsonList = body.getJSONArray(instalList.getJsonListName());
-                        int size = jsonList.length();
-                        List<T> list = new ArrayList<T>();
-                        if (size > 0) {
-                            for (int i = 0; i < size; i++) {
-                                T t = json2Obj(jsonList.getJSONObject(i));
-                                list.add(t);
-                            }
-                        } else {
-                            info = "抱歉，暂无数据！";
-                        }
-                        setData(msg.arg2, list);
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                        info = "数据异常！\n请稍后重新尝试";
-                    }
-                    break;
-                case 0:
-                    info = "服务器异常！\n请稍后重新尝试";
-                    break;
-                case -1:
-                    info = "网络异常！\n请稍后重新尝试";
-                    break;
-                default:
-                    info = "遇到未知错误！\n请稍后重新尝试";
-                    break;
+    /**
+     *
+     * @param jsonObject
+     * @param request
+     */
+    public void success(JSONObject jsonObject,TZRequest request){
+        String info = "";
+        try {
+            JSONArray jsonList = findJSONArray(jsonObject, instalList.getJsonListName());
+            int size = jsonList.length();
+            List<T> list = new ArrayList<T>();
+            if (size > 0) {
+                for (int i = 0; i < size; i++) {
+                    T t = json2Obj(jsonList.getJSONObject(i));
+                    list.add(t);
+                }
+            } else {
+                info = "抱歉，暂无数据！";
             }
+            setData((Integer) request.findParam(instalList.getSkipNumber()), list);
+        } catch (Exception e) {
+            e.printStackTrace();
+            info = "数据异常！\n请稍后重新尝试";
+            TZLog.i(jsonObject.toString());
+        } finally {
+            TZToastTool.nssential(info);
             stopLoad();
-            if (!info.equals("")) {
-                Toast.makeText(TZCommonListActivity.this, info, Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private JSONArray findJSONArray(JSONObject root, String path) throws Exception{
+        String[] keys = path.split("\\.");
+        JSONArray jsonArray = null;
+        for (int i = 0; i < keys.length; i++) {
+            if(i == keys.length - 1){
+                jsonArray = root.getJSONArray(keys[i]);
+            } else {
+                root = root.getJSONObject(keys[i]);
             }
         }
-    };
+        return jsonArray;
+    }
+
+    public void err(String err, TZRequest request){
+        stopLoad();
+    }
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
