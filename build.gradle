@@ -25,16 +25,16 @@ apply plugin: 'signing' //使用signing plugin做数字签名
 
 //定义GroupID和Version，ArtefactID会自动使用Project名
 group = 'com.github.sljjyy'
-version = '1.2-beta'
+version = '1.5'
 
 repositories {
     mavenCentral();
 }
 
-//artifacts {
-//    archives file('tzapi4android.aar')
-//}
-
+artifacts {
+    archives file('tzapi4android-1.6.aar')
+}
+/*
 signing {
     sign configurations.archives
 }
@@ -85,3 +85,4 @@ uploadArchives {
         }
     }
 }
+*/

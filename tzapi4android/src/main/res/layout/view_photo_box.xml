@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/rlPhoto1"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:layout_weight="1">
+
+    <ImageView
+        android:id="@+id/ivPhoto"
+        android:layout_width="@dimen/photobox_image_width"
+        android:layout_height="@dimen/photobox_image_height"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:layout_margin="10dp"
+        android:background="@drawable/view_photo_box_shape"/>
+
+    <ImageView
+        android:id="@+id/ivDel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@id/ivPhoto"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="58dp"
+        android:src="@mipmap/ico_del_photo"
+        android:visibility="invisible" />
+</RelativeLayout>

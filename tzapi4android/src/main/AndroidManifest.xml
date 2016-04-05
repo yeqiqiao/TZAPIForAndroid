@@ -15,6 +15,9 @@
             android:name=".view.CameraActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/app_name" />
+        <activity
+            android:name=".widget.photo.PreviewActivity"
+            android:label="图片预览"
+            android:theme="@android:style/Theme.Holo.Dialog.NoActionBar" />
     </application>
-
 </manifest>

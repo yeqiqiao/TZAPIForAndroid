@@ -5,4 +5,8 @@
     <dimen name="activity_head_padding">10dp</dimen>
     <dimen name="activity_head_textsize">15dp</dimen>
     <dimen name="activity_head_height">25dp</dimen>
+
+    <dimen name="photobox_image_height">80dp</dimen>
+    <dimen name="photobox_image_width">80dp</dimen>
+
 </resources>
