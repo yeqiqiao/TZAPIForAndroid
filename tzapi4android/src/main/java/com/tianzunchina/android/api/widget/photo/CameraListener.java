@@ -19,18 +19,18 @@ import pl.aprilapps.easyphotopicker.EasyImage;
 
 public class CameraListener implements OnClickListener {
 	Activity activity;
-	PhotoBox pbox;
+	TZPhotoBox pbox;
 	int num, weight = 0;
 	private static Uri imageUri;
 	private FileCache fileCache = new FileCache();
 
-	public CameraListener(Context context, int i, PhotoBox pbox) {
+	public CameraListener(Context context, int i, TZPhotoBox pbox) {
 		activity = (Activity) context;
 		num = i;
 		this.pbox = pbox;
 	}
 
-	public CameraListener(Context context, int i, PhotoBox pbox, int weight) {
+	public CameraListener(Context context, int i, TZPhotoBox pbox, int weight) {
 		this(context, i, pbox);
 		this.weight = weight;
 	}

@@ -18,54 +18,61 @@ import java.io.File;
  * CraetTime 2016-3-14
  * @author SunLiang
  */
-public class PhotoBox {
+public class TZPhotoBox {
 	private int index;
-	private int mode = MODE_ADD;
+	int mode = MODE_ADD;
 	private Context context;
-	private ImageView ivThumb;
-	private ImageView ivDel;
+	ImageView ivPhoto;
+	ImageView ivDel;
 	File fileImage;
 	String url;
+	private PhotoBoxChangeListener listener;
 	private PhotoTools pt = PhotoTools.getInstence();
 
-	public PhotoBox(Context context, PhotoBoxView piv, int index) {
+	public TZPhotoBox(){}
+
+	public TZPhotoBox(Context context, TZPhotoBoxView piv, int index) {
 		this.context = context;
-		this.ivThumb = piv.ivThumb;
+		this.ivPhoto = piv.ivPhoto;
 		this.ivDel = piv.ivDel;
 		this.index = index;
 		init();
 	}
 	
-	public PhotoBox(Context context, ImageView thumbIv, ImageView delIv, int index) {
+	public TZPhotoBox(Context context, ImageView thumbIv, ImageView delIv, int index) {
 		this.context = context;
-		this.ivThumb = thumbIv;
+		this.ivPhoto = thumbIv;
 		this.ivDel = delIv;
 		this.index = index;
 		init();
 	}
 
-	public PhotoBox(Context context, ImageView thumbIv, ImageView delIv, int index, int mode) {
+	public TZPhotoBox(Context context, ImageView thumbIv, ImageView delIv, int index, int mode) {
 		this.context = context;
-		this.ivThumb = thumbIv;
+		this.ivPhoto = thumbIv;
 		this.ivDel = delIv;
 		this.index = index;
 		this.mode = mode;
 		init();
 	}
 
-	public PhotoBox(Context context, ImageView thumbIv, ImageView delIv, int i, DelPhotoListener.ImpDelCallBack back) {
-		this.ivThumb = thumbIv;
+	public TZPhotoBox(Context context, ImageView thumbIv, ImageView delIv, int i, DelPhotoListener.ImpDelCallBack back) {
+		this.ivPhoto = thumbIv;
 		this.ivDel = delIv;
 		this.context = context;
 		this.index = i;
-		ivThumb.setOnLongClickListener(new DelPhotoLongListener(this));
+		ivPhoto.setOnLongClickListener(new DelPhotoLongListener(this));
 		ivDel.setOnClickListener(new DelPhotoListener(this, i, back));
 	}
 
 	private void init(){
-		ivThumb.setOnClickListener(new CameraListener(context, index, this));
-		ivThumb.setOnLongClickListener(new DelPhotoLongListener(this));
+		ivPhoto.setOnClickListener(new CameraListener(context, index, this));
+		ivPhoto.setOnLongClickListener(new DelPhotoLongListener(this));
 		ivDel.setOnClickListener(new DelPhotoListener(this));
+	}
+
+	public void setPhotoBoxChangeListener(PhotoBoxChangeListener listener){
+		this.listener = listener;
 	}
 
 	/**
@@ -74,9 +81,9 @@ public class PhotoBox {
 	 */
 	public void invalid(){
 		setMode(MODE_NULL);
-		ivThumb.setImageBitmap(null);
+		ivPhoto.setImageBitmap(null);
 		ivDel.setVisibility(View.INVISIBLE);
-		ivThumb.setEnabled(false);
+		ivPhoto.setEnabled(false);
 	}
 
 	/**
@@ -87,8 +94,8 @@ public class PhotoBox {
 		setMode(MODE_ADD);
 		fileImage = null;
 		ivDel.setVisibility(View.INVISIBLE);
-		ivThumb.setEnabled(true);
-		ivThumb.setImageResource(R.mipmap.ico_add_photo);
+		ivPhoto.setEnabled(true);
+		ivPhoto.setImageResource(R.mipmap.ico_add_photo);
 	}
 
 	/**
@@ -101,7 +108,7 @@ public class PhotoBox {
 		if(url == null) {
 			invalid();
 		}
-		ivThumb.setOnLongClickListener(null);
+		ivPhoto.setOnLongClickListener(null);
 	}
 
 
@@ -111,12 +118,16 @@ public class PhotoBox {
 	 */
 	public void readyDelete(){
 		if(mode == MODE_BROWSE){
+			setMode(MODE_READY_DELETE);
 			ivDel.setVisibility(View.VISIBLE);
 		}
 	}
 
 	public void cancelDelete(){
-		ivDel.setVisibility(View.INVISIBLE);
+		if(mode == MODE_READY_DELETE){
+			setMode(MODE_BROWSE);
+			ivDel.setVisibility(View.INVISIBLE);
+		}
 	}
 
 	/**
@@ -132,8 +143,8 @@ public class PhotoBox {
 			return;
 		}
 		fileImage =  file;
-		ivThumb.setEnabled(true);
-		Picasso.with(context).load(file).placeholder(R.mipmap.pic_loading).error(R.mipmap.pic_loading).config(Bitmap.Config.ALPHA_8).resize(200, 200).centerCrop().into(ivThumb, picassoCallback);
+		ivPhoto.setEnabled(true);
+		Picasso.with(context).load(file).placeholder(R.mipmap.pic_loading).error(R.mipmap.pic_loading).config(Bitmap.Config.ALPHA_8).resize(200, 200).centerCrop().into(ivPhoto, picassoCallback);
 		setMode(MODE_BROWSE);
 	}
 
@@ -142,13 +153,15 @@ public class PhotoBox {
 			return;
 		}
 		this.url =  url;
-		ivThumb.setEnabled(true);
-		Picasso.with(context).load(url).placeholder(R.mipmap.pic_loading).error(R.mipmap.pic_loading).config(Bitmap.Config.ALPHA_8).resize(200, 200).centerCrop().into(ivThumb, picassoCallback);
+		ivPhoto.setEnabled(true);
+		Picasso.with(context).load(url).placeholder(R.mipmap.pic_loading).error(R.mipmap.pic_loading).config(Bitmap.Config.ALPHA_8).resize(200, 200).centerCrop().into(ivPhoto, picassoCallback);
 		setMode(MODE_BROWSE);
 	}
 
 	public void setMode(int mode){
 		this.mode = mode;
+		if (listener == null)return;
+		listener.change(index, mode);
 	}
 
 	public boolean isBrowse() {
@@ -159,11 +172,11 @@ public class PhotoBox {
 		return fileImage;
 	}
 
-	public static final int MODE_NULL = 0, MODE_ONLY_READ = 1, MODE_ADD = 2, MODE_BROWSE = 3;
+	public static final int MODE_NULL = 0, MODE_ONLY_READ = 1, MODE_ADD = 2, MODE_READY_DELETE = 3,MODE_BROWSE = 4;
 
 	@Override
 	 public String toString() {
-		return "PhotoBox [activity=" + context + ", ivThumb=" + ivThumb
+		return "TZPhotoBox [activity=" + context + ", ivPhoto=" + ivPhoto
 				+ ", fileImage=" + fileImage + ", ivDel=" + ivDel + ", pt="
 				+ pt +  "]";
 	}

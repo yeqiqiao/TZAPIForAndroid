@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <attr name="boxCount" format="integer" />
+    <attr name="boxWidth" format="dimension" />
+    <attr name="boxHeight" format="dimension" />
+    <declare-styleable name="TZPhotoBoxGroup">
+        <attr name="boxCount" />
+        <attr name="boxWidth" />
+        <attr name="boxHeight" />
+    </declare-styleable>
+</resources>

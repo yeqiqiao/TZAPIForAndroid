@@ -4,9 +4,9 @@ import android.view.View;
 import android.view.View.OnLongClickListener;
 
 public class DelPhotoLongListener implements OnLongClickListener {
-	private PhotoBox photoBox;
+	private TZPhotoBox photoBox;
 
-	public DelPhotoLongListener(PhotoBox pbox){
+	public DelPhotoLongListener(TZPhotoBox pbox){
 		this.photoBox = pbox;
 	}
 	

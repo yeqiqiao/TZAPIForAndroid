@@ -4,15 +4,15 @@ import android.view.View;
 import android.view.View.OnClickListener;
 
 public class DelPhotoListener implements OnClickListener {
-	private PhotoBox photoBox;
+	private TZPhotoBox photoBox;
 	private ImpDelCallBack callBack;
 	private int index;
 
-	public DelPhotoListener(PhotoBox pbox){
+	public DelPhotoListener(TZPhotoBox pbox){
 		this.photoBox = pbox;
 	}
 
-	public DelPhotoListener(PhotoBox pbox, int index, ImpDelCallBack back){
+	public DelPhotoListener(TZPhotoBox pbox, int index, ImpDelCallBack back){
 		this.photoBox = pbox;
 		callBack = back;
 		this.index = index;
