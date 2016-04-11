@@ -47,7 +47,7 @@ public class LongClickCopyListener implements View.OnLongClickListener {
             cmb.setText(v.toString());
         }
 
-        TZToastTool.nssential(info);
+        TZToastTool.essential(info);
         return false;
     }
 }

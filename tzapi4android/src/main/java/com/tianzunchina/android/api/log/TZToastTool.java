@@ -30,13 +30,13 @@ public class TZToastTool {
         show(msg, Toast.LENGTH_SHORT, TZToastLevel.DEBUG);
     }
 
-    public static void  nssential(String msg){
+    public static void  essential(String msg){
         show(msg, Toast.LENGTH_SHORT, TZToastLevel.ESSENTIAL);
     }
 
 
     private static void show(String msg, int time, int level){
-        if(showLv > level || msg == null || msg.isEmpty()){
+        if(showLv >= level || msg == null || msg.isEmpty()){
             return;
         }
         Toast.makeText(TZApplication.getInstance(), msg, time).show();

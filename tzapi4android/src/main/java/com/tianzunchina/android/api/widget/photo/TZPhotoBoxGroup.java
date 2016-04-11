@@ -8,10 +8,12 @@ import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Toast;
 
 import com.tianzunchina.android.api.R;
+import com.tianzunchina.android.api.log.TZLog;
 import com.tianzunchina.android.api.view.recycler.RecyclerItemClickListener;
 import com.tianzunchina.android.api.view.recycler.TZRecyclerViewAdapter;
 import com.tianzunchina.android.api.view.recycler.TZRecyclerViewHolder;
@@ -31,6 +33,7 @@ public class TZPhotoBoxGroup extends RecyclerView implements PhotoBoxChangeListe
     private int count = 2;
     private int widht,height = 100;
     private TZRecyclerViewAdapter adapter;
+    private boolean isReadyDel = false;
     private List<TZPhotoBox> boxes = new ArrayList<>();
 
     public TZPhotoBoxGroup(Context context) {
@@ -90,6 +93,7 @@ public class TZPhotoBoxGroup extends RecyclerView implements PhotoBoxChangeListe
                         photoBox.ivDel.callOnClick();
                         break;
                     case TZPhotoBox.MODE_ADD:
+                    case TZPhotoBox.MODE_BROWSE:
                     case TZPhotoBox.MODE_ONLY_READ:
                         photoBox.ivPhoto.callOnClick();
                         break;
@@ -114,6 +118,20 @@ public class TZPhotoBoxGroup extends RecyclerView implements PhotoBoxChangeListe
                 }
             }
         });
+    }
+
+    public ArrayList<String> getPaths(){
+        ArrayList<String> paths = new ArrayList<>();
+        for (TZPhotoBox box : boxes){
+            if (box.mode == TZPhotoBox.MODE_BROWSE || box.mode == TZPhotoBox.MODE_ONLY_READ){
+                paths.add(box.getFileImage().getAbsolutePath());
+            }
+        }
+        return paths;
+    }
+
+    public boolean isReadyDelete(){
+        return isReadyDel;
     }
 
     public void cancelDelete(){
@@ -166,11 +184,16 @@ public class TZPhotoBoxGroup extends RecyclerView implements PhotoBoxChangeListe
             return;
         }
         switch (mode){
+            case TZPhotoBox.MODE_READY_DELETE:
+                isReadyDel = true;
+                break;
             case TZPhotoBox.MODE_ADD:
                 deleted(index);
+                isReadyDel = false;
                 break;
             case TZPhotoBox.MODE_BROWSE:
                 added(index);
+                isReadyDel = false;
                 break;
         }
         adapter.notifyItemChanged(index + 1);
@@ -209,7 +232,44 @@ public class TZPhotoBoxGroup extends RecyclerView implements PhotoBoxChangeListe
         return true;
     }
 
+
+    /**
+     * 检查照片数量是否符合最少数量 minCount
+     * @param minCount 最少数量
+     * @return
+     */
+    public boolean check(int minCount){
+        int count = 0;
+        for (int i = 0; boxes.get(i).mode == TZPhotoBox.MODE_BROWSE && i < boxes.size(); i++){
+            count++;
+            if(count >= minCount){
+                return true;
+            }
+        }
+        return false;
+    }
+
     private boolean isLast(int index){
         return boxes.size()-1 == index;
+    }
+
+
+    /**
+     * 取消删除
+     * @param event
+     * @return
+     */
+    public boolean dispatchTouchEvent(MotionEvent event, boolean def) {
+        if(isReadyDelete()&&event.getAction() == MotionEvent.ACTION_UP){
+            int[] position = new int[2];
+            getLocationInWindow(position);
+            TZLog.w("" + position);
+            View view = findChildViewUnder(event.getX() - position[0], event.getY() -  position[1]);
+            if(view == null){
+                cancelDelete();
+            }
+            return true;
+        }
+        return def;
     }
 }

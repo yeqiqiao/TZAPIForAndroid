@@ -253,7 +253,7 @@ public abstract class TZCommonListActivity<T> extends Activity implements XListV
             info = "数据异常！\n请稍后重新尝试";
             TZLog.i(jsonObject.toString());
         } finally {
-            TZToastTool.nssential(info);
+            TZToastTool.essential(info);
             stopLoad();
         }
     }

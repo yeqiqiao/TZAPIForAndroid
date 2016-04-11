@@ -94,7 +94,7 @@ public class CameraActivity extends Activity {
 					}
 				} catch (Exception e){
 					finish();
-					TZToastTool.nssential("摄像头授权有误, 是否已禁止调用摄像头");
+					TZToastTool.essential("摄像头授权有误, 是否已禁止调用摄像头");
 				}
 
 			}
@@ -169,7 +169,7 @@ public class CameraActivity extends Activity {
 			}
 		} catch (Exception e) {
 			closeDialog();
-			TZToastTool.nssential( "相机自动对焦失败!");
+			TZToastTool.essential( "相机自动对焦失败!");
 //			Toast.makeText(this, "相机自动对焦失败!", Toast.LENGTH_SHORT).show();
 		}
 
@@ -226,7 +226,7 @@ public class CameraActivity extends Activity {
 				closeDialog();
 				finish();
 			} else {
-				TZToastTool.nssential("请检查SD卡");
+				TZToastTool.essential("请检查SD卡");
 			}
 		}
 	};
