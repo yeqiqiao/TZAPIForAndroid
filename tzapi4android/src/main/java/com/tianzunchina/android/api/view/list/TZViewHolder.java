@@ -277,8 +277,6 @@ public class TZViewHolder {
 
     }
 
-
-
     public TZViewHolder setOnTouchListener(int viewId,
                                            View.OnTouchListener listener) {
         View view = getView(viewId);

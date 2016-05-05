@@ -10,8 +10,8 @@ import java.util.Map;
  * @author SunLiang
  */
 public class TZRequest {
-    String service = null; //服务器地址
-    String method = null; //调用方法
+    public String service = null; //服务器地址
+    public String method = null; //调用方法
     ArrayMap<String, Object> params = new ArrayMap<String, Object>(); //参数
 
     public TZRequest(String service, String method) {
@@ -53,7 +53,7 @@ public class TZRequest {
     String getParamsMap(){
         String str = "?";
         for (int i = 0; i < params.size(); i++) {
-            str += params.keyAt(i) + "=" + params.valueAt(i);
+            str += params.keyAt(i) + "=" + params.valueAt(i) + "&";
         }
         return str.substring(0, str.length() - 1);
     }

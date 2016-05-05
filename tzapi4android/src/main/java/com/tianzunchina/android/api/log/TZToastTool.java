@@ -20,9 +20,6 @@ public class TZToastTool {
     }
 
     public static void  mark(String msg){
-        if(showLv > TZToastLevel.MARK){
-            return;
-        }
         show(msg, Toast.LENGTH_SHORT, TZToastLevel.MARK);
     }
 
@@ -36,7 +33,7 @@ public class TZToastTool {
 
 
     private static void show(String msg, int time, int level){
-        if(showLv >= level || msg == null || msg.isEmpty()){
+        if(showLv > level || msg == null || msg.isEmpty()){
             return;
         }
         Toast.makeText(TZApplication.getInstance(), msg, time).show();

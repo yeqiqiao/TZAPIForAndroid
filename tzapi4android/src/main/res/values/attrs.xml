@@ -3,9 +3,11 @@
     <attr name="boxCount" format="integer" />
     <attr name="boxWidth" format="dimension" />
     <attr name="boxHeight" format="dimension" />
+    <attr name="boxLayoutMode" format="string" />
     <declare-styleable name="TZPhotoBoxGroup">
         <attr name="boxCount" />
         <attr name="boxWidth" />
         <attr name="boxHeight" />
+        <attr name="boxLayoutMode" />
     </declare-styleable>
 </resources>

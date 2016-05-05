@@ -10,7 +10,6 @@ import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
-import android.widget.Toast;
 
 import com.tianzunchina.android.api.R;
 import com.tianzunchina.android.api.log.TZLog;
@@ -59,6 +58,13 @@ public class TZPhotoBoxGroup extends RecyclerView implements PhotoBoxChangeListe
         linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
         this.setLayoutManager(linearLayoutManager);
         initClickListener();
+    }
+
+    public void initLayout(String mode){
+        switch (mode){
+            case "boxLayoutMode":
+
+        }
     }
 
     private void initAttr(Context context, @Nullable AttributeSet attrs, int defStyle){
