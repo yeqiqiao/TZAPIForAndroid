@@ -15,4 +15,4 @@
 `compile 'com.github.jkwiecien:EasyImage:1.2.1'`  
 `compile 'com.github.lawloretienne:imagegallery:0.0.13'`  
 
-目前里面并有没更多内容 近期将逐步搬运
+目前里面并有没更多内容 近期将逐步搬运1
